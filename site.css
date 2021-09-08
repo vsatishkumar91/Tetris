@@ -2,20 +2,40 @@
     margin: 0 auto;
 }
 
+.game-container {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    margin-top: 100px;
+}
+
 .game .grid {
     display: flex;
     flex-wrap: wrap;
-    height: 210px;
-    width: 100px;
+    height: 420px;
+    width: 200px;
 
 }
 
 .grid div {
-    height: 10px;
-    width:10px;
+    height: 20px;
+    width:20px;
     background-color: red;
 }
 
 .grid .block3 {
     background-color: green;
+}
+
+.previous-grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 80px;
+    width: 80px;
+}
+
+.previous-grid div {
+    height: 20px;
+    width:20px;
+    background-color: yellow;
 }
