@@ -1,0 +1,21 @@
+.game {
+    margin: 0 auto;
+}
+
+.game .grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 210px;
+    width: 100px;
+
+}
+
+.grid div {
+    height: 10px;
+    width:10px;
+    background-color: red;
+}
+
+.grid .block3 {
+    background-color: green;
+}
