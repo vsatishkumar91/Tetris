@@ -25,35 +25,35 @@ body {
     width:30px;
 }
 
-.previous-grid {
+.next-shape-grid {
     display: flex;
     flex-wrap: wrap;
-    height: 80px;
-    width: 80px;
+    height: 120px;
+    width: 120px;
 }
 
-.previous-grid div {
-    height: 20px;
-    width:20px;
+.next-shape-grid div {
+    height: 30px;
+    width:30px;
 }
 
 .header {
     display: flex;
     justify-content: center;
     font-size: 70px;
-    padding-top: 40px;
+    margin: 0px;
     color: rgb(216, 237, 234);
 }
 
-.display {
+.stats-display {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 50px;
     width: 300px;
-    height: 25rem;
+    height: 450px;
     background: #f0f0f0;
     background-image: linear-gradient(#d0d0d0, #f0f0f0);
     border-radius: 5px;
@@ -61,22 +61,11 @@ body {
     color: #85796b;
 }
 
+
 .block {
     background-image: url(./images/blue_block.png);
   }
-  
-  .block2 {
-    background-image: url(./images/purple_block.png);
-  }
-  
-  .block3 {
-    background-image: url(./images/green_block.png);
-  }
-  
-  .block4 {
-    background-image: url(./images/navy_block.png);
-  }
-  
-  .block5 {
-    background-image: url(./images/pink_block.png);
+    
+  .last-line {
+    background-image: url(./images/gray_block.png);
   }

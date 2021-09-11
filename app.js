@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares;
     let displaySquares
 
-    let previousGrid = document.querySelector(".previous-grid")
+    let previousGrid = document.querySelector(".next-shape-grid")
     const scoreDisplay = document.querySelector('.score-display')
     const highScoreDisplay = document.querySelector('.high-score-display')
     const linesDisplay = document.querySelector('.lines-score')
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lines = 0
     let timerId
     let nextRandom = 0
+    let highScore = 0;
 
 
     const colors = [
@@ -121,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw()
         const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1)
         if (!isAtRightEdge) currentPosition += 1
-        if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+        if (current.some(index => squares[currentPosition + index].classList.contains('top-tile'))) {
             currentPosition -= 1
         }
         draw()
@@ -131,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw()
         const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
         if (!isAtLeftEdge) currentPosition -= 1
-        if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+        if (current.some(index => squares[currentPosition + index].classList.contains('top-tile'))) {
             currentPosition += 1
         }
         draw()
@@ -166,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function freeze() {
-        if (current.some(index => squares[currentPosition + index + width].classList.contains('block3') || squares[currentPosition + index + width].classList.contains('block2'))) {
-            current.forEach(index => squares[index + currentPosition].classList.add('block2'))
+        if (current.some(index => squares[currentPosition + index + width].classList.contains('last-line') || squares[currentPosition + index + width].classList.contains('top-tile'))) {
+            current.forEach(index => squares[index + currentPosition].classList.add('top-tile'))
             random = nextRandom
             nextRandom = Math.floor(Math.random() * theTetrominoes.length)
             current = theTetrominoes[random][currentRotation]
@@ -182,14 +183,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function addScore() {
         for (currentIndex = 0; currentIndex < GRID_SIZE; currentIndex += GRID_WIDTH) {
             const row = [currentIndex, currentIndex + 1, currentIndex + 2, currentIndex + 3, currentIndex + 4, currentIndex + 5, currentIndex + 6, currentIndex + 7, currentIndex + 8, currentIndex + 9]
-            if (row.every(index => squares[index].classList.contains('block2'))) {
+            if (row.every(index => squares[index].classList.contains('top-tile'))) {
                 score += 10
                 lines += 1
                 scoreDisplay.innerHTML = score;
+                if(score > highScore) {
+                    setHighScroe(score);
+                }
                 linesDisplay.innerHTML = lines
                 row.forEach(index => {
                     squares[index].style.backgroundImage = 'none'
-                    squares[index].classList.remove('block2') || squares[index].classList.remove('block')
+                    squares[index].classList.remove('top-tile') || squares[index].classList.remove('block')
 
                 })
                 //splice array
@@ -201,10 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function gameOver() {
-        if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+        if (current.some(index => squares[currentPosition + index].classList.contains('top-tile'))) {
             scoreDisplay.innerHTML = 'end'
             clearInterval(timerId)
         }
+    }
+
+    function readHighScroe() {
+        highScore = localStorage.getItem("tetris-highScore");
+        if (highScore === null) {
+            highScore = 0;
+            localStorage.setItem("tetris-highScore", JSON.stringify(highScore))
+        }
+        else {
+            highScore = JSON.parse(highScore);
+            highScoreDisplay.innerHTML = highScore;
+        }
+    }
+
+    function setHighScroe(hScore) {
+        highScore = hScore;
+        localStorage.setItem("tetris-highScore", JSON.stringify(hScore));
+        highScoreDisplay.innerHTML = hScore;
     }
 
     function createGrid() {
@@ -215,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < GRID_WIDTH; i++) {
             let gridElement = document.createElement("div")
-            gridElement.setAttribute("class", "block3")
+            gridElement.setAttribute("class", "last-line")
             grid.appendChild(gridElement)
         }
 
@@ -250,11 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function init() {
         createGrid();
+        readHighScroe();
         squares = Array.from(grid.querySelectorAll('div'))
         draw()
         timerId = setInterval(moveDown, 1000)
         nextRandom = Math.floor(Math.random() * theTetrominoes.length)
-        displaySquares = document.querySelectorAll('.previous-grid div')
+        displaySquares = document.querySelectorAll('.next-shape-grid div')
         displayShape();
     }
 
