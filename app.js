@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let previousGrid = document.querySelector(".previous-grid")
     const scoreDisplay = document.querySelector('.score-display')
+    const highScoreDisplay = document.querySelector('.high-score-display')
     const linesDisplay = document.querySelector('.lines-score')
 
 
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (row.every(index => squares[index].classList.contains('block2'))) {
                 score += 10
                 lines += 1
-                scoreDisplay.innerHTML = score
+                scoreDisplay.innerHTML = score;
                 linesDisplay.innerHTML = lines
                 row.forEach(index => {
                     squares[index].style.backgroundImage = 'none'
